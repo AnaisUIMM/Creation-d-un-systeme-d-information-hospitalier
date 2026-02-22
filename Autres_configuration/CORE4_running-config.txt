@@ -1,0 +1,98 @@
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname CORE4
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+interface Loopback0
+ ip address 10.255.0.4 255.255.255.255
+!
+interface GigabitEthernet0/0
+ ip address 172.16.14.2 255.255.255.252
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1/0
+ ip address 172.16.34.2 255.255.255.252
+ ip ospf 1 area 0
+!
+interface GigabitEthernet2/0
+ ip address 172.16.24.2 255.255.255.252
+ ip ospf 1 area 0
+!
+interface GigabitEthernet3/0
+ ip address 172.16.45.1 255.255.255.252
+ ip ospf 1 area 0
+!
+interface GigabitEthernet4/0
+ ip address 172.16.104.1 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+!
+! Interface vers switch (router-on-a-stick)
+interface GigabitEthernet5/0
+ ip ospf 1 area 0
+ no shutdown
+!
+interface GigabitEthernet5/0.50
+ encapsulation dot1Q 50
+ ip address 10.20.20.1 255.255.255.240
+ ip ospf 1 area 0
+!
+interface GigabitEthernet5/0.60
+ encapsulation dot1Q 60
+ ip address 10.20.60.1 255.255.255.248
+ ip ospf 1 area 0
+!
+interface GigabitEthernet5/0.61
+ encapsulation dot1Q 61
+ ip address 10.20.61.1 255.255.255.248
+ ip ospf 1 area 0
+!
+interface GigabitEthernet5/0.63
+ encapsulation dot1Q 63
+ ip address 10.20.63.1 255.255.255.252
+ ip ospf 1 area 0
+!
+!
+router ospf 1
+ router-id 10.255.0.4
+ log-adjacency-changes
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ no passive-interface GigabitEthernet1/0
+ no passive-interface GigabitEthernet2/0
+ no passive-interface GigabitEthernet3/0
+ no passive-interface GigabitEthernet4/0
+ no passive-interface GigabitEthernet5/0
+ no passive-interface GigabitEthernet5/0.50
+ no passive-interface GigabitEthernet5/0.60
+ no passive-interface GigabitEthernet5/0.61
+ no passive-interface GigabitEthernet5/0.63
+!
+ip flow-export version 9
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+
+
+
+
+

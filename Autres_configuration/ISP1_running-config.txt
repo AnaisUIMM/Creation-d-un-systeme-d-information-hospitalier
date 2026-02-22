@@ -1,0 +1,18 @@
+version 12.2
+hostname ISP1
+no ip cef
+!
+interface GigabitEthernet0/0
+ description EDGE-ISP1
+ ip address 203.0.113.1 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Internet ISP1
+ ip address 8.8.8.1 255.255.255.0
+ no shutdown
+!
+ip route 172.16.0.0 255.255.0.0 203.0.113.2
+!
+end
+write memory
