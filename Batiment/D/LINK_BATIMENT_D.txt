@@ -1,0 +1,96 @@
+!
+version 16.3.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname LINK_BATIMENT_E
+!
+!
+no profinet
+!
+no ip cef
+ip routing
+!
+no ipv6 cef
+!
+spanning-tree mode pvst
+!
+!
+interface Loopback0
+ ip address 10.255.0.7 255.255.255.255
+!
+interface GigabitEthernet1/0/1
+ switchport trunk allowed vlan 401-404
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/2
+ switchport trunk allowed vlan 401-404
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/3
+ description SWITCH_BATIMENT-CORE4
+ no switchport
+ ip address 172.16.104.2 255.255.255.252
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+!
+interface Vlan401
+ description D_POSTES
+ mac-address 000a.f3b7.9201
+ ip address 10.40.141.1 255.255.255.128
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan402
+ description D_MOB
+ mac-address 000a.f3b7.9202
+ ip address 10.40.142.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan403
+ description D_VOIP
+ mac-address 000a.f3b7.9203
+ ip address 10.40.143.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan404
+ description D_ACC
+ mac-address 000a.f3b7.9204
+ ip address 10.40.145.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+router ospf 1
+ router-id 10.255.0.7
+ log-adjacency-changes
+ no passive-interface GigabitEthernet1/0/2
+ no passive-interface Vlan401
+ no passive-interface Vlan402
+ no passive-interface Vlan403
+ no passive-interface Vlan404
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 172.16.104.1 
+!
+ip flow-export version 9
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+!
+end
+

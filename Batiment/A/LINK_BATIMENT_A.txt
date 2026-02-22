@@ -1,0 +1,108 @@
+!
+version 16.3.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname LINK_BATIMENT_A
+!
+!
+no profinet
+!
+no ip cef
+ip routing
+!
+no ipv6 cef
+!
+spanning-tree mode pvst
+!
+!
+interface Loopback0
+ ip address 10.255.0.9 255.255.255.255
+!
+interface GigabitEthernet1/0/1
+ switchport trunk allowed vlan 101-104
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/2
+ switchport trunk allowed vlan 101-104
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/3
+ switchport trunk allowed vlan 101-104
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/4
+ description SWITCH_BATIMENT-CORE1
+ no switchport
+ ip address 172.16.101.2 255.255.255.252
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+!
+interface Vlan101
+ description A_POSTES
+ mac-address 000a.f3b7.9201
+ ip address 10.10.101.1 255.255.255.128
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan101
+ description A_POSTES
+ mac-address 000a.f3b7.9202
+ ip address 10.10.102.1 255.255.255.128
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan102
+ description A_MOB
+ mac-address 000a.f3b7.9203
+ ip address 10.10.103.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan103
+ description A_VOIP
+ mac-address 000a.f3b7.9204
+ ip address 10.10.104.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan104
+ description A_ACC
+ mac-address 000a.f3b7.9205
+ ip address 10.10.106.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+router ospf 1
+ router-id 10.255.0.9
+ log-adjacency-changes
+ no passive-interface GigabitEthernet1/0/2
+ no passive-interface Vlan100
+ no passive-interface Vlan101
+ no passive-interface Vlan102
+ no passive-interface Vlan103
+ no passive-interface Vlan104
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 172.16.101.1 
+!
+ip flow-export version 9
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+!
+end
+

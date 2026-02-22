@@ -1,0 +1,37 @@
+!
+version 12.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname ETAGE_E00
+!
+!
+!
+ptp clock transparent domain 0 profile default
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 501-504
+ switchport mode trunk
+!
+interface GigabitEthernet1/1
+ switchport trunk allowed vlan 501-504
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end
+

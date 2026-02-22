@@ -1,0 +1,107 @@
+!
+version 16.3.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname LINK_BATIMENT_C
+!
+!
+no profinet
+!
+ip cef
+ip routing
+!
+no ipv6 cef
+!
+spanning-tree mode pvst
+!
+!
+interface Loopback0
+ ip address 10.255.0.11 255.255.255.255
+!
+interface GigabitEthernet1/0/1
+ switchport trunk allowed vlan 301-305
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/2
+ switchport trunk allowed vlan 301-305
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/3
+ switchport trunk allowed vlan 301-305
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/4
+ description SWITCH_BATIMENT-CORE3
+ no switchport
+ ip address 172.16.103.2 255.255.255.252
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+!
+interface Vlan301
+ description C_BIO
+ mac-address 000a.f3b7.9201
+ ip address 10.30.130.1 255.255.255.128
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan302
+ description C_POSTES
+ mac-address 000a.f3b7.9202
+ ip address 10.30.131.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan303
+ description C_MOB
+ mac-address 000a.f3b7.9203
+ ip address 10.30.132.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan304
+ description C_VOIP
+ mac-address 000a.f3b7.9204
+ ip address 10.30.133.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+interface Vlan305
+ description C_ACC
+ mac-address 000a.f3b7.9205
+ ip address 10.30.135.1 255.255.255.240
+ ip helper-address 10.20.20.11
+ ip ospf 1 area 0
+!
+router ospf 1
+ router-id 10.255.0.11
+ log-adjacency-changes
+ no passive-interface GigabitEthernet1/0/2
+ no passive-interface Vlan301
+ no passive-interface Vlan302
+ no passive-interface Vlan303
+ no passive-interface Vlan304
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 172.16.103.1 
+!
+ip flow-export version 9
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+!
+end
+
