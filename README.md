@@ -48,7 +48,7 @@ L’ensemble est homogène pour simplifier la maintenance.
   - SOC  
   - cœur de réseau  
 
-👉 Voir `plan_adressage.md`.
+👉 Voir `plan_adressage.ods`.
 
 ---
 
