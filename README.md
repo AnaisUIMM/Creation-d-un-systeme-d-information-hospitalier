@@ -146,6 +146,3 @@ Le SOC comprend :
 
 ## 📜 Licence
 Projet académique — reproduction autorisée pour usage pédagogique.
-- ou même un **README orienté portfolio** pour valoriser ton travail.
-
-Tu veux une version plus **technique**, plus **design**, ou plus **professionnelle** ?
